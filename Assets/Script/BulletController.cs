@@ -9,7 +9,6 @@ public class BulletController : MonoBehaviour {
 
     private Rigidbody2D rb2d;
     private Transform tf;
-
     public GameObject Enemy;
 
 	// Use this for initialization
@@ -22,9 +21,9 @@ public class BulletController : MonoBehaviour {
         rb2d = GetComponent<Rigidbody2D>();
         tf = GetComponent<Transform>();
 
-        // 画面の一番上のy座標を取得
+        // 画面の一番右の座標
         _screenRight = Camera.main.ViewportToWorldPoint(new Vector2(1, 0)).x;
-        // 弾を上に移動させる
+        // 弾を右に移動させる
         rb2d.velocity = tf.right.normalized * Bspeed;
     }
 
