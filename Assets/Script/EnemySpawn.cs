@@ -8,6 +8,8 @@ public class EnemySpawn : MonoBehaviour {
     private float interval;
     //時間計測
     private float time = 0;
+    //乱数生成
+    System.Random random = new System.Random();
     // Use this for initialization
     void Start () {
         interval = 3f;
@@ -22,14 +24,13 @@ public class EnemySpawn : MonoBehaviour {
     }
 
     private void SpawnEnemy() {
-        System.Random random = new System.Random();
         time += Time.deltaTime;
         if (time > interval) {
             GameObject enemy = Instantiate(enemyPref);
-            enemy.transform.position = new Vector2(10, random.Next(0, 5));
+            enemy.transform.position = new Vector2(10, random.Next(-4, 5));
             time = 0;
             interval = random.Next(0, 5);
-            Debug.Log("Spawn");
+            Debug.Log("Spawn" + enemy.ToString());
         }
     }
 }

@@ -40,7 +40,7 @@ public class EnemyController : MonoBehaviour {
 
     void Move()//敵移動
     {
-        transform.position = new Vector2(1,1);
+        
     }
 
     void Status(int s_hp, int s_power)

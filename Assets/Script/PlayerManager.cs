@@ -18,7 +18,7 @@ public class PlayerManager : MonoBehaviour {
     public int power;//弾丸の威力
     public float ShotDelay = 0f;//発射ディレイ
 
-    public bool BulletShot = false;//打つか打たないか切り替え
+    private bool BulletShot = false; //打つか打たないか切り替え
 
 
     private float vecx = 0;
