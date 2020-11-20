@@ -9,8 +9,8 @@ public class EnemyController : MonoBehaviour {
     private Rigidbody2D rb2d;
 
     public GameObject EnemyPref;
-    private int Hp;
-    private int Power;
+    private int Hp = 0;
+    private int Power = 0;
     // Use this for initialization
     void Awake()
     {
