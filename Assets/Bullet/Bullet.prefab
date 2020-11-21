@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 1446513040899316, guid: 01160b18402b46b459d32c6bbd6577c0, type: 2}
+  BulletPref: {fileID: 1227126837847880}
 --- !u!212 &212313302988061434
 SpriteRenderer:
   m_ObjectHideFlags: 1

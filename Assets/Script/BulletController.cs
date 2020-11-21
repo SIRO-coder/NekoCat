@@ -10,6 +10,7 @@ public class BulletController : MonoBehaviour {
     private Rigidbody2D rb2d;
     private Transform tf;
     public GameObject Enemy;
+    public GameObject BulletPref;
 
 	// Use this for initialization
 	void Start () {
@@ -31,13 +32,19 @@ public class BulletController : MonoBehaviour {
     void Update () {
 
         // Rigidbody2Dのsimulatedがfalse(弾が使われていない状態)であれば何もしない
-        if (rb2d.simulated == false) { return; }
-        // ここからはRigidbody2Dのsimulatedがtrueの場合(=弾が動いている場合)
-        // 画面外に弾が出ていたらRigidbody2Dのsimulatedをfalseにして物理演算を止める(弾をストップする)
-        // ＋１しているのは余裕を持っているだけです。
+        if (rb2d.simulated == false) { rb2d.position = new Vector2(_screenRight + 1, rb2d.position.y); }
         if (tf.position.x > _screenRight + 1)
         {
             rb2d.simulated = false;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Enemy")
+        {
+            rb2d.position = new Vector2(_screenRight + 1, rb2d.position.y);
+            rb2d.velocity = Vector2.zero;
         }
     }
 

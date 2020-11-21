@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class PlayerManager : MonoBehaviour {
 
     Rigidbody2D rb2d;
+    UI_Manager uim;
 
     public float playerSpeed;//移動速度
     public int remain;//残機
@@ -125,11 +126,16 @@ public class PlayerManager : MonoBehaviour {
         else return;
     }
 
-    void OnCollision2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if(collision.gameObject.tag == "Enemy" && remain == 0)
         {
             IsDead(true);
+        }
+        else
+        {
+            remain --;
+            uim.Remain_.text = Remain.ToString();
         }
     }
 }
