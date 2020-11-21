@@ -7,8 +7,8 @@ public class EnemyController : MonoBehaviour {
     private PlayerManager Player;
     private BulletPool BPool;
     private Rigidbody2D rb2d;
-
     public GameObject EnemyPref;
+    System.Random random = new System.Random();
     private int Hp = 0;
     private int Power = 0;
     // Use this for initialization
@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour {
         Player = GameObject.Find("HitBox").GetComponent<PlayerManager>();
         BPool = GameObject.Find("pool").GetComponent<BulletPool>();
         rb2d = GetComponent<Rigidbody2D>();
-        Status(10, 1);
+        Status(random.Next(3,15), 1);
     }
     void Start ()
     {

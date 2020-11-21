@@ -1,13 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class PlayerManager : MonoBehaviour {
 
     Rigidbody2D rb2d;
 
     public float playerSpeed;//移動速度
-    public int health;//体力
     public int remain;//残機
     public int Remain {
         //外部用変数
@@ -32,12 +31,6 @@ public class PlayerManager : MonoBehaviour {
     {
         GameObject obj = GameObject.Find("MainCamera");
         camera = obj.GetComponent<Camera>();
-
-        //ステータスの初期化
-        playerSpeed = 5;
-        health = 1;
-        remain = 3;
-        power = 1;
     }
     void Start()
     {
@@ -126,11 +119,17 @@ public class PlayerManager : MonoBehaviour {
         return bottomRight;
     }
 
+    void IsDead(bool dead)
+    {
+        if(dead) {SceneManager.LoadScene("Game_Over");}
+        else return;
+    }
+
     void OnCollision2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Enemy")
         {
-            
+            IsDead(true);
         }
     }
 }
