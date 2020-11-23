@@ -4,6 +4,7 @@ public class EnemySpawn : MonoBehaviour {
 
     //敵プレファブ
     public GameObject enemyPref;
+    private int EnemyCount;
     //敵スポーンインターバル
     private float interval;
     //時間計測
@@ -26,7 +27,9 @@ public class EnemySpawn : MonoBehaviour {
     private void SpawnEnemy() {
         time += Time.deltaTime;
         if (time > interval) {
+            EnemyCount++;
             GameObject enemy = Instantiate(enemyPref);
+            enemy.name = enemyPref.name + (" " + EnemyCount.ToString());
             enemy.transform.position = new Vector2(10, random.Next(-4, 5));
             time = 0;
             interval = random.Next(0, 5);

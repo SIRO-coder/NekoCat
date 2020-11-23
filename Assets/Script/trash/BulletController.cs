@@ -9,7 +9,6 @@ public class BulletController : MonoBehaviour {
 
     private Rigidbody2D rb2d;
     private Transform tf;
-    public GameObject Enemy;
     public GameObject BulletPref;
 
 	// Use this for initialization
@@ -41,11 +40,13 @@ public class BulletController : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if(collision.gameObject.CompareTag("Enemy"))
         {
-            rb2d.position = new Vector2(_screenRight + 1, rb2d.position.y);
-            rb2d.velocity = Vector2.zero;
+            tf.position = new Vector2(100,100);   
         }
+        
     }
+
+
 
 }

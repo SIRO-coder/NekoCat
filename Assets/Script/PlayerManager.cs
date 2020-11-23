@@ -3,43 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class PlayerManager : MonoBehaviour {
-
-    Rigidbody2D rb2d;
-    UI_Manager uim;
-
     public float playerSpeed;//移動速度
-    public int remain;//残機
+    public int remain = 3;//残機
     public int Remain {
         //外部用変数
         get {return remain;}
         set {remain = value;}
     }
-
     public int power;//弾丸の威力
     public float ShotDelay = 0f;//発射ディレイ
-
-    private bool BulletShot = false; //打つか打たないか切り替え
-
+    public bool BulletShot = false; //打つか打たないか切り替え
+    public bool dead = false; //死んだ判定
 
     private float vecx = 0;
     private float vecy = 0;
 	private new Camera camera;
-    private Transform tf;
+    private Rigidbody2D rb2d;
     private BulletPool Bpool;
+    private GameObject canvas;
+    private UI_Manager uim;
+    private GameObject[] EnemyPrefList;
+    private Animator anim;
+    public GameObject bulletPref;
+
 
     // Use this for initialization
     void Awake()
     {
         GameObject obj = GameObject.Find("MainCamera");
         camera = obj.GetComponent<Camera>();
+        canvas = GameObject.Find("Canvas");
+        uim = canvas.GetComponent<UI_Manager>();
+        EnemyPrefList = GameObject.FindGameObjectsWithTag("Enemy");
+        anim = GetComponent<Animator>();
     }
     void Start()
     {
-        tf = transform;
+        rb2d = GetComponent<Rigidbody2D>();
         //プールへの参照を保存
-        Bpool = GameObject.Find("pool").GetComponent<BulletPool>();
+        //Bpool = GameObject.Find("pool").GetComponent<BulletPool>();
         // 弾を打つコルーチンを呼び出す
-        StartCoroutine(ShotBullet());
+        StartCoroutine(Shot());
     }
 
     // Update is called once per frame
@@ -77,11 +81,12 @@ public class PlayerManager : MonoBehaviour {
 		transform.position = (new Vector3(
                 Mathf.Clamp(transform.position.x, getScreenTopLeft().x, -getScreenTopLeft().x),
                 Mathf.Clamp(transform.position.y, getScreenBottomRight().y, -getScreenBottomRight().y),0));
-
         if (Input.GetKey(KeyCode.X)) { BulletShot = true; }
         else { BulletShot = false; }
+
             
     }
+    /*
     IEnumerator ShotBullet()
     {
         while (true)
@@ -101,6 +106,15 @@ public class PlayerManager : MonoBehaviour {
         }
         else return;
     }
+    */
+    IEnumerator Shot()
+	{
+		while(true)
+		{
+			BulletInstance();
+			yield return new WaitForSeconds(ShotDelay);
+		}
+	}
     
 	private Vector3 getScreenTopLeft()
     {
@@ -120,22 +134,33 @@ public class PlayerManager : MonoBehaviour {
         return bottomRight;
     }
 
-    void IsDead(bool dead)
+    void IsDead()
     {
-        if(dead) {SceneManager.LoadScene("Game_Over");}
-        else return;
+        //StopCoroutine(ShotBullet());
+        StopCoroutine(Shot());
+        SceneManager.LoadScene("Game_Over");
     }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.tag == "Enemy" && remain == 0)
-        {
-            IsDead(true);
+    void BulletInstance()
+	{
+		if(BulletShot) {
+            Instantiate(bulletPref, transform.position, Quaternion.identity);
         }
-        else
+	}
+
+
+    void OnTriggerEnter2D(Collider2D c2d)
+    {
+        
+        if(c2d.gameObject.CompareTag("Enemy")) { dead = true; }
+        if(c2d.gameObject.CompareTag("Enemy") && remain <= 0 && dead)
         {
-            remain --;
+            IsDead();
+        }
+        else if(c2d.gameObject.CompareTag("Enemy") && remain > 0 && dead)
+        {
+            Remain --;
             uim.Remain_.text = Remain.ToString();
+            transform.position = new Vector2(-5.8f,-0.5f);
         }
     }
 }

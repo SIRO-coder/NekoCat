@@ -21,10 +21,10 @@ GameObject:
   - component: {fileID: 4344481261190894}
   - component: {fileID: 212169432587575810}
   - component: {fileID: 50765458380345466}
-  - component: {fileID: 58133932266051158}
   - component: {fileID: 114973802837721912}
+  - component: {fileID: 58911941846120932}
   m_Layer: 9
-  m_Name: EnemyPref
+  m_Name: EnemyPrefab
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1446513040899316}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.26, y: -0.27, z: 0}
+  m_LocalPosition: {x: 16.059736, y: -1.121192, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -63,7 +63,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &58133932266051158
+--- !u!58 &58911941846120932
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,9 +75,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.04532218, y: -0.09064419}
+  m_Offset: {x: -0.15156269, y: -0.15156175}
   serializedVersion: 2
-  m_Radius: 1.2346777
+  m_Radius: 1.1102505
 --- !u!114 &114973802837721912
 MonoBehaviour:
   m_ObjectHideFlags: 1

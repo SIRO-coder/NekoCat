@@ -9,15 +9,16 @@ public class UI_Manager : MonoBehaviour {
     public Text Time_;
     public Text Remain_;
 
-    private PlayerManager Playerm;
+    private GameObject Neko;
+    private PlayerManager Player;
 
     int time = 0;
-    long score = 0;
+    public long score = 0;
     // Use this for initialization
     void Awake() {
-        Playerm = GameObject.Find("HitBox").GetComponent<PlayerManager>();
-        Remain_.text = Playerm.Remain.ToString();
-        
+        Neko = GameObject.Find("HitBox");
+        Player = Neko.GetComponent<PlayerManager>();
+        Remain_.text = Player.Remain.ToString();
         StartCoroutine(TimeCoroutine());
         StartCoroutine(ScoreCoroutine());
     }

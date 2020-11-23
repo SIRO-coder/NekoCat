@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour {
 
-    private PlayerManager Player;
-    private BulletPool BPool;
     private Rigidbody2D rb2d;
     public GameObject EnemyPref;
     private Transform tf;
+    private GameObject canvas;
+    private UI_Manager uI_Manager;
     System.Random random = new System.Random();
     private int Hp = 0;
-    private int Power = 0;
+    private int Power = 100;
     private float _screenLeft;
     // Use this for initialization
     void Awake()
     {
-        Player = GameObject.Find("HitBox").GetComponent<PlayerManager>();
-        BPool = GameObject.Find("pool").GetComponent<BulletPool>();
         rb2d = GetComponent<Rigidbody2D>();
         tf = GetComponent<Transform>();
+        canvas = GameObject.Find("Canvas");
+        uI_Manager = canvas.GetComponent<UI_Manager>();
         _screenLeft = Camera.main.ViewportToWorldPoint(new Vector2(0, 0)).x;
-        Status(random.Next(3,15), 1);
+        Status(random.Next(3,7), 1);
     }
     void Start ()
     {
@@ -33,6 +33,7 @@ public class EnemyController : MonoBehaviour {
     {
         if(Hp == 0)
         {
+            uI_Manager.score += random.Next(500, 2000);
             Destroy(EnemyPref);
         }
     }
@@ -51,7 +52,6 @@ public class EnemyController : MonoBehaviour {
             rb2d.simulated = false; 
             Destroy(EnemyPref);
         }
-        else {return;}
     }
 
     void Status(int s_hp, int s_power)
@@ -62,7 +62,7 @@ public class EnemyController : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Bullet")
+        if(collision.gameObject.CompareTag("Bullet"))
         {
             Hp--;
             Debug.Log("hit");
