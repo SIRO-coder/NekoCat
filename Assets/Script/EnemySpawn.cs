@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
-
+using System.Collections;
 public class EnemySpawn : MonoBehaviour {
 
     //敵プレファブ
     public GameObject enemyPref;
-    private int EnemyCount;
+    private long EnemyCount;
     //敵スポーンインターバル
     private float interval;
     //時間計測
@@ -13,7 +13,7 @@ public class EnemySpawn : MonoBehaviour {
     System.Random random = new System.Random();
     // Use this for initialization
     void Start () {
-        interval = 3f;
+        interval = 1f;
     }
 	
 	// Update is called once per frame
@@ -30,10 +30,9 @@ public class EnemySpawn : MonoBehaviour {
             EnemyCount++;
             GameObject enemy = Instantiate(enemyPref);
             enemy.name = enemyPref.name + (" " + EnemyCount.ToString());
-            enemy.transform.position = new Vector2(10, random.Next(-4, 5));
+            enemy.transform.position = new Vector2(10, random.Next(-4, 6));
             time = 0;
-            interval = random.Next(0, 5);
-            Debug.Log("Spawn" + enemy.ToString());
+            interval = random.Next(0, 4);
         }
     }
 }

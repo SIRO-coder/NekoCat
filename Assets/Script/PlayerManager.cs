@@ -14,16 +14,14 @@ public class PlayerManager : MonoBehaviour {
     public float ShotDelay = 0f;//発射ディレイ
     public bool BulletShot = false; //打つか打たないか切り替え
     public bool dead = false; //死んだ判定
+    private bool invincibleTime = false;
 
     private float vecx = 0;
     private float vecy = 0;
 	private new Camera camera;
-    private Rigidbody2D rb2d;
     private BulletPool Bpool;
     private GameObject canvas;
     private UI_Manager uim;
-    private GameObject[] EnemyPrefList;
-    private Animator anim;
     public GameObject bulletPref;
 
 
@@ -34,12 +32,9 @@ public class PlayerManager : MonoBehaviour {
         camera = obj.GetComponent<Camera>();
         canvas = GameObject.Find("Canvas");
         uim = canvas.GetComponent<UI_Manager>();
-        EnemyPrefList = GameObject.FindGameObjectsWithTag("Enemy");
-        anim = GetComponent<Animator>();
     }
     void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
         //プールへの参照を保存
         //Bpool = GameObject.Find("pool").GetComponent<BulletPool>();
         // 弾を打つコルーチンを呼び出す
@@ -115,6 +110,18 @@ public class PlayerManager : MonoBehaviour {
 			yield return new WaitForSeconds(ShotDelay);
 		}
 	}
+
+    IEnumerator WaitForIt()
+    {
+        invincibleTime = true;
+        Remain --;
+        uim.Remain_.text = Remain.ToString();
+        transform.position = new Vector2(-5.8f,-0.5f);
+
+        yield return new WaitForSeconds(3f);
+        invincibleTime = false;
+        StopCoroutine("WaitForIt");
+    }
     
 	private Vector3 getScreenTopLeft()
     {
@@ -158,9 +165,7 @@ public class PlayerManager : MonoBehaviour {
         }
         else if(c2d.gameObject.CompareTag("Enemy") && remain > 0 && dead)
         {
-            Remain --;
-            uim.Remain_.text = Remain.ToString();
-            transform.position = new Vector2(-5.8f,-0.5f);
+            if(!invincibleTime){StartCoroutine("WaitForIt");}
         }
     }
 }

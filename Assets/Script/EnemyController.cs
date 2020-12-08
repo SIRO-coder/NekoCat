@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour {
         canvas = GameObject.Find("Canvas");
         uI_Manager = canvas.GetComponent<UI_Manager>();
         _screenLeft = Camera.main.ViewportToWorldPoint(new Vector2(0, 0)).x;
-        Status(random.Next(3,7), 1);
+        Status(random.Next(2,8), 1);
     }
     void Start ()
     {
